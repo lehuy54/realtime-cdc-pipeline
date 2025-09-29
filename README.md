@@ -24,6 +24,7 @@
 - **Schema Registry**: Dịch vụ trung gian của Kafka dùng để quản lý và lưu trữ schema cho dữ liệu trong topic, ở trường hợp này ta config nó đang nắm giữ Avro format. Nó giúp producer và consumer thống nhất dữ liệu, đảm bảo compability khi có schema thay đổi. Ngoài ra giúp ta tiết kiệm bộ nhớ hơn khi message được bắn đi không phải ở dạng Json  
 - **Sink Connector**: Ta sử dụng trực tiếp plugin Google BigQuery Sink connector của Confluentinc cung cấp, để nó lấy dữ liệu từ Kafka topic, deserialize theo schema từ Schema Registry, sau đó load vào BigQuery dataset tương ứng
 - **Google BigQuery**: cloud data warehouse, trong kịch bản này nó sẽ nhận hết dữ liệu deserialized từ thằng sink connector (vì thế nên nó sẽ bao gồm các cột before after của dữ liệu - nếu như đó là action update)
+
 *Lưu ý: Đối với Google BigQuery Sink Connectors self-managed của confluentinc chỉ hỗ trợ cho đến 09/01/2026. Nên có thể migrating sang V2. Nhưng đến thời điểm hiện tại thì V2 chỉ mới hỗ trợ self-hosted*
 ---
 
@@ -56,7 +57,7 @@
     ```bash
     docker compose up -d
     ```
-7. cd về root và đăng kí 2 connectors
+7. cd về root src và đăng kí 2 connectors
     ```bash
     curl -X POST http://localhost:8083/connectors \
         -H "Content-Type: application/json" \
@@ -69,13 +70,15 @@
         -d @bigquery-connector.json
 
     ```
-8. Có thể lên kafka-ui tại cổng 'localhost:8080' để kiểm tra xem các topic đã được tạo chưa, tên của các topic sẽ được đặt tên theo config của debezium connector: <topic.prefix>.<database>.<table>
+8. Có thể lên kafka-ui tại cổng `localhost:8080` để kiểm tra xem các topic đã được tạo chưa, 
+   tên của các topic sẽ được đặt tên theo config của debezium connector: 
+   `<topic.prefix>.<database>.<table>`
 
 9. Kiểm tra dữ liệu trên Google BigQuery:
     ```bash
     SELECT * FROM `YOUR_PROJECT_ID.inventory_cdc.dbserver1_inventory_customers` LIMIT 10;
     ```
-10. Có thể chạy scripts python data generator:
+10. Có thể chạy scripts python data generator để mô phỏng kịch bản realtime:
     ```bash
     python -m venv venv
 
@@ -83,5 +86,5 @@
 
     pip install mysql-connector-python faker
 
-    python generate_data.py
+    python streaming-data.py
     ```
