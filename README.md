@@ -33,7 +33,7 @@
     ```bash
     git clone https://github.com/lehuy54/realtime-cdc-pipeline.git
     ```
-## 2. Tải connectors cần thiết và giải nén vào thư mục `connectors/`
+2. Tải connectors cần thiết và giải nén vào thư mục `connectors/`
 
 - **Source Connector (MySQL Debezium):**  
   [Tải tại đây](https://repo1.maven.org/maven2/io/debezium/debezium-connector-mysql/2.5.4.Final/debezium-connector-mysql-2.5.4.Final-plugin.tar.gz)
