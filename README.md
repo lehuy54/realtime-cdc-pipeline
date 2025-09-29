@@ -16,7 +16,7 @@
 
 ## 🧩 Kiến trúc hệ thống
 
-![Kiến trúc hệ thống](https://github.com/lehuy54/weather-data-pipeline/blob/main/Ki%E1%BA%BFn%20tr%C3%BAc%20h%E1%BB%87%20th%E1%BB%91ng.png)
+![Kiến trúc hệ thống](https://github.com/lehuy54/realtime-cdc-pipeline/blob/main/System%20Architecture.png)
 
 - **Data source**: MySQL, giả sử các dữ liệu realtime về transaction từ hệ thống OLTP đẩy vào  
 - **Debezium (Source Connector)**: plugins của kafka connect đảm nhiệm CDC, đọc bin log của MySQL để bắt các action làm thay đổi dữ liệu như **insert, update, delete**, sau đó convert thành Avro format để publish change event lên topic Kafka
@@ -24,7 +24,6 @@
 - **Schema Registry**: Dịch vụ trung gian của Kafka dùng để quản lý và lưu trữ schema cho dữ liệu trong topic, ở trường hợp này ta config nó đang nắm giữ Avro format. Nó giúp producer và consumer thống nhất dữ liệu, đảm bảo compability khi có schema thay đổi. Ngoài ra giúp ta tiết kiệm bộ nhớ hơn khi message được bắn đi không phải ở dạng Json  
 - **Sink Connector**: Ta sử dụng trực tiếp plugin Google BigQuery Sink connector của Confluentinc cung cấp, để nó lấy dữ liệu từ Kafka topic, deserialize theo schema từ Schema Registry, sau đó load vào BigQuery dataset tương ứng
 - **Google BigQuery**: cloud data warehouse, trong kịch bản này nó sẽ nhận hết dữ liệu deserialized từ thằng sink connector (vì thế nên nó sẽ bao gồm các cột before after của dữ liệu - nếu như đó là action update)
-
 *Lưu ý: Đối với Google BigQuery Sink Connectors self-managed của confluentinc chỉ hỗ trợ cho đến 09/01/2026. Nên có thể migrating sang V2. Nhưng đến thời điểm hiện tại thì V2 chỉ mới hỗ trợ self-hosted*
 ---
 
