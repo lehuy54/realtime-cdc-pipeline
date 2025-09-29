@@ -1,0 +1,15 @@
+# Credentials
+bigquery-credentials.json
+
+# Virtual environment
+venv/
+
+# Connectors (local config, not needed in Git)
+connectors/bigquery/wepay-kafka-connect-bigquery-2.5.7
+connectors/mysql/debezium-connector-mysql
+
+# Python cache
+__pycache__/
+*.pyc
+
+note.txt
