@@ -1,20 +1,20 @@
 # Realtime CDC Pipeline | Data Engineering Project
 
 ## 📑 Mục lục
-- [🎯 Giới thiệu](#-giới-thiệu)  
-- [🧩 Kiến trúc hệ thống](#-kiến-trúc-hệ-thống)   
-- [⚙️ Hướng dẫn cài đặt & chạy](#️-hướng-dẫn-cài-đặt--chạy)  
-- [🔗 Giao diện quản trị](#-giao-diện-quản-trị)  
+- [Giới thiệu](#-giới-thiệu)  
+- [Kiến trúc hệ thống](#-kiến-trúc-hệ-thống)   
+- [Hướng dẫn cài đặt & chạy](#️-hướng-dẫn-cài-đặt--chạy)  
+- [Giao diện quản trị](#-giao-diện-quản-trị)  
 
 ---
 
-## 🎯 Giới thiệu
+## Giới thiệu
 
  Đồng bộ dữ liệu thường dựa vào trigger trong database nhưng xem ra cách này sẽ gây tải nặng lên hệ thống nguồn nếu dữ liệu đủ lớn, cộng hưởng với việc khó quản lí. Với Change Data Capture, kỹ thuật bắt sự thay đổi của dữ liệu từ log của database đảm bảo ít ảnh hưởng đến hiệu năng, đồng thời dữ liệu được truyền đi gần như thời gian thực đến các hệ thống downstream
 
 ---
 
-## 🧩 Kiến trúc hệ thống
+## Kiến trúc hệ thống
 
 ![Kiến trúc hệ thống](https://github.com/lehuy54/realtime-cdc-pipeline/blob/main/System%20Architecture.png)
 
@@ -25,10 +25,9 @@
 - **Sink Connector**: Ta sử dụng trực tiếp plugin Google BigQuery Sink connector của Confluentinc cung cấp, để nó lấy dữ liệu từ Kafka topic, deserialize theo schema từ Schema Registry, sau đó load vào BigQuery dataset tương ứng
 - **Google BigQuery**: cloud data warehouse, trong kịch bản này nó sẽ nhận hết dữ liệu deserialized từ thằng sink connector (vì thế nên nó sẽ bao gồm các cột before after của dữ liệu - nếu như đó là action update)
 
-*Lưu ý: Đối với Google BigQuery Sink Connectors self-managed của confluentinc chỉ hỗ trợ cho đến 09/01/2026. Nên có thể migrating sang V2. Nhưng đến thời điểm hiện tại thì V2 chỉ mới hỗ trợ self-hosted*
 ---
 
-## ⚙️ Hướng dẫn cài đặt & chạy
+## Hướng dẫn cài đặt & chạy
 
 1. Clone repository:
     ```bash
