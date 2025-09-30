@@ -16,7 +16,7 @@
 
 ## Kiến trúc hệ thống
 
-![Kiến trúc hệ thống](https://github.com/lehuy54/realtime-cdc-pipeline/blob/main/System%20Architecture.png)
+![Kiến trúc hệ thống](https://github.com/lehuy54/realtime-cdc-pipeline/blob/main/SystemArchitecture.png)
 
 - **Data source**: MySQL, giả sử các dữ liệu realtime về transaction từ hệ thống OLTP đẩy vào  
 - **Debezium (Source Connector)**: plugins của kafka connect đảm nhiệm CDC, đọc bin log của MySQL để bắt các action làm thay đổi dữ liệu như **insert, update, delete**, sau đó convert thành Avro format để publish change event lên topic Kafka
